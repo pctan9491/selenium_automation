@@ -63,7 +63,7 @@ class SingleElement(SeleniumTemplate):
             
             # Test Class Name selector
             print("Testing Class Name selector...")
-            search_box = self.wait_for_element(By.CLASS_NAME, "gs-input")
+            search_box = self.wait_for_element(By.CLASS_NAME, "HomePageSearchContainer_homePageSearchContainer_container_input__1LS0r")
             search_box.send_keys('detect by Class')
             time.sleep(3)
             search_box.clear()
