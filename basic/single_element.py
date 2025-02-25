@@ -68,6 +68,14 @@ class SingleElement(SeleniumTemplate):
             time.sleep(3)
             search_box.clear()
             time.sleep(2)
+
+            # Test Tag Name selector
+            print("Testing Tag Name selector...")
+            search_box = self.wait_for_element(By.TAG_NAME, 'input')
+            search_box.send_keys('detect by tag name')
+            time.sleep(3)
+            search_box.clear()
+            time.sleep(2)
             return True
             
         except Exception as e:
