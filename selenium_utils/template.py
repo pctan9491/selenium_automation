@@ -27,6 +27,13 @@ class SeleniumTemplate:
         return wait.until(
             EC.presence_of_element_located((by, value))
         )
+
+    def wait_for_elements(self, by, value):
+        """Wait for an element to be present and return it"""
+        wait = WebDriverWait(self.driver, self.timeout)
+        return wait.until(
+            EC.presence_of_all_elements_located((by, value))
+        )
     
     def wait_for_clickable(self, by, value):
         """Wait for an element to be clickable and return it"""

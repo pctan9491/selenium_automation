@@ -14,7 +14,7 @@ class MultipleElements(SeleniumTemplate):
         super().__init__(timeout)
         self.base_url = "https://www.geeksforgeeks.org/"
 
-    def perform_search(self):
+    def print_elements_text(self):
         try:
             # Setup the driver first
             self.setup_driver(headless=False)
@@ -22,36 +22,33 @@ class MultipleElements(SeleniumTemplate):
             # Then navigate and perform actions
             self.navigate_to(self.base_url)
             
-            # Find search box by XPATH
-            search_box = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            # # Test Partial Link Text
+            # print("Testing Partial Link Text selector...")
+            # button_txt = self.wait_for_clickable(By.PARTIAL_LINK_TEXT, "Full Stack Live")
+            # button_txt.click()
+            # time.sleep(3)
             
-            # Test Partial Link Text
-            print("Testing Partial Link Text selector...")
-            button_txt = self.wait_for_clickable(By.PARTIAL_LINK_TEXT, "Full Stack Live")
-            button_txt.click()
-            time.sleep(3)
+            # # Store the main window handle
+            # main_window = self.driver.current_window_handle
             
-            # Store the main window handle
-            main_window = self.driver.current_window_handle
+            # # Handle multiple windows
+            # for handle in self.driver.window_handles:
+            #     self.driver.switch_to.window(handle)
+            #     if "Full Stack Development with React & Node JS - Live" in self.driver.title:
+            #         time.sleep(2)
+            #         self.driver.close()
+            #         break
             
-            # Handle multiple windows
-            for handle in self.driver.window_handles:
-                self.driver.switch_to.window(handle)
-                if "Full Stack Development with React & Node JS - Live" in self.driver.title:
-                    time.sleep(2)
-                    self.driver.close()
-                    break
-            
-            # Switch back to the main window
-            self.driver.switch_to.window(main_window)
+            # # Switch back to the main window
+            # self.driver.switch_to.window(main_window)
             
             # Test XPATH selector
             print("Testing XPATH selector...")
-            search_box = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
-            search_box.send_keys('detect by XPATH')
-            time.sleep(3)
-            search_box.clear()
-            time.sleep(2)
+            option_btn = self.wait_for_elements(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[3]/a[1]')
+            # Get and print the text content of all buttons
+            button_texts = [btn.text for btn in option_btn]
+            print(f"Button texts: {button_texts}")
+            time.sleep(5)
             
             # Test CSS selector
             print("Testing CSS selector...")
