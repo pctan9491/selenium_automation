@@ -48,36 +48,37 @@ class MultipleElements(SeleniumTemplate):
             # Get and print the text content of all buttons
             button_texts = [btn.text for btn in option_btn]
             print(f"Button texts: {button_texts}")
-            time.sleep(5)
-            
-            # Test CSS selector
-            print("Testing CSS selector...")
-            search_box = self.wait_for_element(By.CSS_SELECTOR, "#comp > div.index_homePageContainer__H8GJD > div.HomePageSearchContainer_homePageSearchContainer__bNc8c > div.HomePageSearchContainer_homePageSearchContainer_container__vWZMD > input")
-            search_box.send_keys('detect by CSS')
             time.sleep(3)
-            search_box.clear()
-            time.sleep(2)
-            
-            # Test Class Name selector
-            print("Testing Class Name selector...")
-            search_box = self.wait_for_element(By.CLASS_NAME, "HomePageSearchContainer_homePageSearchContainer_container_input__1LS0r")
-            search_box.send_keys('detect by Class')
-            time.sleep(3)
-            search_box.clear()
-            time.sleep(2)
 
-            # Test Tag Name selector
-            print("Testing Tag Name selector...")
-            search_box = self.wait_for_element(By.TAG_NAME, 'input')
-            search_box.send_keys('detect by tag name')
+            # Test LINK_TEXT selector
+            print("Testing LINK_TEXT...")
+            option_btn = self.wait_for_elements(By.LINK_TEXT, 'Master DS & ML')
+            # Get and print the text content of all buttons
+            button_texts = [btn.text for btn in option_btn]
+            print(f"Button texts: {button_texts}")
             time.sleep(3)
-            search_box.clear()
-            time.sleep(2)
-            return True
+
+            # Test PARTIAL_LINK_TEXT selector
+            print("Testing PARTIAL_LINK_TEXT...")
+            option_btn = self.wait_for_elements(By.PARTIAL_LINK_TEXT, 'Master D')
+            # Get and print the text content of all buttons
+            button_texts = [btn.text for btn in option_btn]
+            print(f"Button texts: {button_texts}")
+            time.sleep(3)
+
+            # Test TAG_NAME selector
+            print("Testing TAG_NAME...")
+            option_btn = self.wait_for_elements(By.TAG_NAME, 'a')
+            # Get and print the text content of all buttons
+            button_texts = [btn.text for btn in option_btn]
+            print(f"Button texts: {button_texts}")
+            time.sleep(3)
+            
+            # return True
             
         except Exception as e:
             print(f"Error performing search: {e}")
-            return False
+            # return False
         
         finally:
             if self.driver:  # Only cleanup if driver exists
