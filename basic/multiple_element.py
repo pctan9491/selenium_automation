@@ -73,6 +73,22 @@ class MultipleElements(SeleniumTemplate):
             button_texts = [btn.text for btn in option_btn]
             print(f"Button texts: {button_texts}")
             time.sleep(3)
+
+            # Test CLASS_NAME selector
+            print("Testing CLASS_NAME...")
+            option_btn = self.wait_for_elements(By.CLASS_NAME, 'SearchChip_searchChip__oKfVN')
+            # Get and print the text content of all buttons
+            button_texts = [btn.text for btn in option_btn]
+            print(f"Button texts: {button_texts}")
+            time.sleep(3)
+
+            # Test CSS_SELECTOR selector
+            print("Testing CSS_SELECTOR...")
+            option_btn = self.wait_for_elements(By.CSS_SELECTOR, '#comp > div.index_homePageContainer__H8GJD > div.HomePageSearchContainer_homePageSearchContainer__bNc8c > div.SearchContainerChips_searchContainerChips__PnpvD > a:nth-child(1)')
+            # Get and print the text content of all buttons
+            button_texts = [btn.text for btn in option_btn]
+            print(f"Button texts: {button_texts}")
+            time.sleep(3)
             
             # return True
             
