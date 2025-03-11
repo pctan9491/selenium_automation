@@ -1,57 +1,41 @@
+# import all required frameworks
+import unittest
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.webdriver.common.by import By
 
-def perform_google_search(search_term, timeout=30):
-    try:
-        # Initialize the webdriver with options
-        options = webdriver.ChromeOptions()
-        options.add_argument('--start-maximized')  # Start with maximized window
-        driver = webdriver.Chrome(options=options)
-        
-        # Navigate to Google
-        driver.get("https://www.google.com")
-        
-        # Wait for search box to be present
-        wait = WebDriverWait(driver, timeout)
-        search_box = wait.until(
-            EC.presence_of_element_located((By.XPATH, '//*[@id="APjFqb"]'))
-        )
-        
-        # Enter the search term
-        search_box.clear()  # Clear any existing text
-        search_box.send_keys(search_term)
-        search_box.send_keys(Keys.RETURN)
-        
-        # Wait for search results to load
-        wait.until(
-            EC.presence_of_element_located((By.ID, "search"))
-        )
-        
-        return driver
-        
-    except TimeoutException:
-        print(f"Timeout waiting for element after {timeout} seconds")
-        driver.quit()
-        raise
-    except WebDriverException as e:
-        print(f"WebDriver error occurred: {e}")
-        driver.quit()
-        raise
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        driver.quit()
-        raise
+# inherit TestCase Class and create a new test class
+class PythonOrgSearch(unittest.TestCase):
 
+	# initialization of webdriver
+	def setUp(self):
+		self.driver = webdriver.Firefox()
+
+	# Test case method. It should always start with test_
+	def test_search_in_python_org(self):
+		
+		# get driver
+		driver = self.driver
+		# get python.org using selenium
+		driver.get("http://www.python.org")
+
+		# assertion to confirm if title has python keyword in it
+		self.assertIn("Python", driver.title)
+
+		# locate element using name
+		elem = driver.find_element(By.NAME, "q")
+
+		# send data
+		elem.send_keys("pycon")
+
+		# receive data
+		elem.send_keys(Keys.RETURN)
+		assert "No results found." not in driver.page_source
+
+	# cleanup method called after every test performed
+	def tearDown(self):
+		self.driver.close()
+
+# execute the script
 if __name__ == "__main__":
-    try:
-        driver = perform_google_search("Testing")
-        # Add your further processing here
-        
-    finally:
-        # Always close the browser
-        driver.quit()
-        
+	unittest.main()
