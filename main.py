@@ -6,7 +6,7 @@ sys.path.insert(0, project_root)
 
 from tests.geeks_to_geeks import GeeksToGeeksSearch
 from tests.geeks_login import geeksLogin
-from basic.multiple_element import MultipleElements
+from basic.writing_test import WritingTest
 
 import time
 
@@ -38,5 +38,5 @@ def main():
 
 
 if __name__ == "__main__":
-    multiple_element = MultipleElements()
-    multiple_element.print_elements_text()
+    writing_test = WritingTest()
+    writing_test.assert_write_test()

@@ -15,7 +15,7 @@ class WritingTest(SeleniumTemplate, unittest.TestCase):
         super().__init__(timeout)
         self.base_url = "https://www.geeksforgeeks.org/"
 
-    def print_elements_text(self):
+    def assert_write_test(self):
         try:
             # Setup the driver first
             self.setup_driver(headless=False)
@@ -27,6 +27,8 @@ class WritingTest(SeleniumTemplate, unittest.TestCase):
             search_box = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
             search_box.send_keys("JavaScript")
             search_box.send_keys(Keys.ENTER)
+            time.sleep(4)
+            assert "No results found." not in self.driver.page_source
             
         except Exception as e:
             print(f"Error performing search: {e}")
