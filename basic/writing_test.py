@@ -11,11 +11,12 @@ from selenium_utils.template import SeleniumTemplate
 import time
 
 class WritingTest(SeleniumTemplate, unittest.TestCase):
-    def __init__(self, timeout=30):
-        super().__init__(timeout)
+    def __init__(self, methodName='runTest'):  # Change this line
+        SeleniumTemplate.__init__(self, timeout=30)
+        unittest.TestCase.__init__(self, methodName)  # Add methodName here
         self.base_url = "https://www.geeksforgeeks.org/"
 
-    def assert_write_test(self):
+    def test_assert_write(self):  # Changed method name to start with "test_"
         try:
             # Setup the driver first
             self.setup_driver(headless=False)
@@ -28,11 +29,14 @@ class WritingTest(SeleniumTemplate, unittest.TestCase):
             search_box.send_keys("JavaScript")
             search_box.send_keys(Keys.ENTER)
             time.sleep(4)
-            assert "No results found." not in self.driver.page_source
+            
+            # Find search results and verify JavaScript content
+            search_results = self.wait_for_element(By.CLASS_NAME, "HomePageSearchModal_homePageSearchModalContainer_modal_container_content__drrYe")
+            self.assertTrue("Python" in search_results.text, "Search results should contain 'JavaScript'")
             
         except Exception as e:
             print(f"Error performing search: {e}")
-            # return False
+            raise  # Raise the exception to fail the test
         
         finally:
             if self.driver:  # Only cleanup if driver exists

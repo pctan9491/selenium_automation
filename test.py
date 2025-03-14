@@ -1,41 +1,36 @@
-# import all required frameworks
-import unittest
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import unittest
 
-# inherit TestCase Class and create a new test class
-class PythonOrgSearch(unittest.TestCase):
+class BrowserStackTutorials(unittest.TestCase):
+    def test_soft_assert(self):
+        # Set up Chrome options
+        options = Options()
+        options.add_argument('--start-maximized')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        
+        # Initialize Chrome driver with options
+        driver = webdriver.Chrome(options=options)
+        
+        # Navigate to website
+        driver.get("https://www.browserstack.com/")
+        
+        # Get actual title
+        actual_title = driver.title
+        expected_title = "Most Reliable App & Cross Browser Testing Platform | BrowserStack"
+        
+        try:
+            # Perform soft assertions
+            self.assertEqual(actual_title, expected_title, "Title does not match")
+            self.assertNotEqual(actual_title, "Incorrect Title", "Title matches an incorrect value")
+            self.assertIsNotNone(actual_title, "Page title should not be null")
+            self.assertTrue(actual_title.lower() == expected_title.lower(), 
+                          "Title does not match in case-insensitive comparison")
+            
+        finally:
+            driver.quit()
 
-	# initialization of webdriver
-	def setUp(self):
-		self.driver = webdriver.Firefox()
-
-	# Test case method. It should always start with test_
-	def test_search_in_python_org(self):
-		
-		# get driver
-		driver = self.driver
-		# get python.org using selenium
-		driver.get("http://www.python.org")
-
-		# assertion to confirm if title has python keyword in it
-		self.assertIn("Python", driver.title)
-
-		# locate element using name
-		elem = driver.find_element(By.NAME, "q")
-
-		# send data
-		elem.send_keys("pycon")
-
-		# receive data
-		elem.send_keys(Keys.RETURN)
-		assert "No results found." not in driver.page_source
-
-	# cleanup method called after every test performed
-	def tearDown(self):
-		self.driver.close()
-
-# execute the script
-if __name__ == "__main__":
-	unittest.main()
+if __name__ == '__main__':
+    unittest.main()
