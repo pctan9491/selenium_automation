@@ -32,7 +32,7 @@ class WritingTest(SeleniumTemplate, unittest.TestCase):
             
             # Find search results and verify JavaScript content
             search_results = self.wait_for_element(By.CLASS_NAME, "HomePageSearchModal_homePageSearchModalContainer_modal_container_content__drrYe")
-            self.assertTrue("Python" in search_results.text, "Search results should contain 'JavaScript'")
+            self.assertTrue("JavaScript" in search_results.text, "Search results should contain 'JavaScript'")
             
         except Exception as e:
             print(f"Error performing search: {e}")

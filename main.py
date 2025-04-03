@@ -8,7 +8,8 @@ sys.path.insert(0, project_root)
 from tests.geeks_to_geeks import GeeksToGeeksSearch
 from tests.geeks_login import geeksLogin
 from basic.writing_test import WritingTest
+from basic.assert_learn import AssertLearn
 
 if __name__ == "__main__":
-    suite = unittest.TestLoader().loadTestsFromTestCase(WritingTest)
+    suite = unittest.TestLoader().loadTestsFromTestCase(AssertLearn)
     unittest.TextTestRunner(verbosity=2).run(suite)
