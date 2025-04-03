@@ -25,7 +25,7 @@ class WritingTest(SeleniumTemplate, unittest.TestCase):
             self.navigate_to(self.base_url)
            
             # Find the search bar and enter a query
-            search_box = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            search_box = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[3]/input')
             search_box.send_keys("JavaScript")
             search_box.send_keys(Keys.ENTER)
             time.sleep(4)

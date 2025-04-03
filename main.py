@@ -11,5 +11,5 @@ from basic.writing_test import WritingTest
 from basic.assert_learn import AssertLearn
 
 if __name__ == "__main__":
-    suite = unittest.TestLoader().loadTestsFromTestCase(AssertLearn)
+    suite = unittest.TestLoader().loadTestsFromTestCase(WritingTest)
     unittest.TextTestRunner(verbosity=2).run(suite)
