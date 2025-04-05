@@ -6,14 +6,26 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 
 class SeleniumTemplate:
-    def __init__(self, timeout=30):
-        """Initialize the Selenium template with configurable timeout"""
+    def __init__(self, timeout=30, browser_type="chrome"):
+        """Initialize the Selenium template with configurable timeout and browser type"""
         self.timeout = timeout
+        self.browser_type = browser_type.lower()
         self.driver = None
         
     def setup_driver(self, headless=False):
-        """Setup and configure the Chrome WebDriver"""
-        options = webdriver.ChromeOptions()
+        """Setup and configure WebDriver based on browser type"""
+        if self.browser_type == "chrome":
+            from selenium.webdriver.chrome.service import Service
+            from webdriver_manager.chrome import ChromeDriverManager
+            options = webdriver.ChromeOptions()
+        elif self.browser_type == "edge":
+            from selenium.webdriver.edge.service import Service
+            from webdriver_manager.microsoft import EdgeChromiumDriverManager
+            options = webdriver.EdgeOptions()
+        else:
+            raise ValueError(f"Unsupported browser type: {self.browser_type}")
+
+        # Common options
         options.add_argument('--start-maximized')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
@@ -22,7 +34,12 @@ class SeleniumTemplate:
         if headless:
             options.add_argument('--headless')
         
-        self.driver = webdriver.Chrome(options=options)
+        # Create driver based on browser type
+        if self.browser_type == "chrome":
+            self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        else:  # edge
+            self.driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()), options=options)
+            
         return self.driver
     
     def wait_for_element(self, by, value):
