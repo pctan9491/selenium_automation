@@ -1,5 +1,11 @@
 import time
 import unittest
+import sys
+import os
+
+# Add parent directory to path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
@@ -31,7 +37,7 @@ class AssertLearn(SeleniumTemplate, unittest.TestCase):
 
             # 1. Assert Page Title
             print("\n1. Asserting Page Title")
-            expected_title = "GeeksforGeeks | A computer science portal for geeks"
+            expected_title = "GeeksforGeeks | Your All-in-One Learning Portal"
             actual_title = self.driver.title
             assert actual_title == expected_title
             print(f"   ✅ PASS: Page title is exactly as expected: '{actual_title}'")
