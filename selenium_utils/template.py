@@ -42,6 +42,58 @@ class SeleniumTemplate:
             
         return self.driver
     
+    def set_implicit_wait(self, seconds=None):
+        """Set implicit wait timeout for the driver
+        
+        Args:
+            seconds (int, optional): Number of seconds to wait. If None, uses the default timeout.
+                                     Set to 0 to disable implicit wait.
+        
+        Returns:
+            None
+        """
+        wait_time = seconds if seconds is not None else self.timeout
+        if self.driver:
+            self.driver.implicitly_wait(wait_time)
+            print(f"Implicit wait set to {wait_time} seconds")
+        else:
+            print("Driver not initialized. Call setup_driver() first.")
+    
+    def explicit_wait(self, condition, locator=None, timeout=None, poll_frequency=0.5, message=None):
+        """Perform an explicit wait with a custom expected condition
+        
+        Args:
+            condition: The expected condition from selenium.webdriver.support.expected_conditions
+                      (e.g., EC.visibility_of_element_located)
+            locator (tuple, optional): A tuple of (By.XXX, 'value') if the condition requires a locator
+            timeout (int, optional): Custom timeout in seconds. If None, uses the default timeout.
+            poll_frequency (float, optional): How often to check for the condition, in seconds
+            message (str, optional): Custom timeout message
+        
+        Returns:
+            The result of the wait (usually an element or boolean)
+        
+        Raises:
+            TimeoutException: If the condition is not met within the timeout period
+        """
+        if not self.driver:
+            raise WebDriverException("Driver not initialized. Call setup_driver() first.")
+            
+        wait_time = timeout if timeout is not None else self.timeout
+        wait = WebDriverWait(self.driver, wait_time, poll_frequency=poll_frequency, message=message)
+        
+        try:
+            # If condition requires a locator (most do)
+            if locator:
+                result = wait.until(condition(locator))
+            else:
+                # Some conditions don't need a locator (e.g., alert_is_present)
+                result = wait.until(condition)
+            return result
+        except TimeoutException as e:
+            print(f"Timeout waiting for condition: {e}")
+            raise
+    
     def wait_for_element(self, by, value):
         """Wait for an element to be present and return it"""
         wait = WebDriverWait(self.driver, self.timeout)
