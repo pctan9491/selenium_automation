@@ -63,7 +63,7 @@ class SeleniumTemplate:
         else:
             print("Driver not initialized. Call setup_driver() first.")
     
-    def explicit_wait(self, condition, locator=None, timeout=None, poll_frequency=0.5, message=None):
+    def set_explicit_wait(self, condition, locator=None, timeout=None, poll_frequency=0.5):
         """Perform an explicit wait with a custom expected condition
         
         Args:
@@ -72,7 +72,6 @@ class SeleniumTemplate:
             locator (tuple, optional): A tuple of (By.XXX, 'value') if the condition requires a locator
             timeout (int, optional): Custom timeout in seconds. If None, uses the default timeout.
             poll_frequency (float, optional): How often to check for the condition, in seconds
-            message (str, optional): Custom timeout message
         
         Returns:
             The result of the wait (usually an element or boolean)
@@ -84,7 +83,7 @@ class SeleniumTemplate:
             raise WebDriverException("Driver not initialized. Call setup_driver() first.")
             
         wait_time = timeout if timeout is not None else self.timeout
-        wait = WebDriverWait(self.driver, wait_time, poll_frequency=poll_frequency, message=message)
+        wait = WebDriverWait(self.driver, wait_time, poll_frequency=poll_frequency)
         
         try:
             # If condition requires a locator (most do)
@@ -174,6 +173,43 @@ class SeleniumTemplate:
                 print("Browser was already closed")
             finally:
                 self.driver = None
+
+    def smart_scroll_to_element(self, by, value, timeout=30):
+        """Intelligently scroll to find and center an element
+        
+        Args:
+            by: The locator strategy (e.g., By.ID, By.XPATH)
+            value: The locator value
+            timeout: Maximum time to wait for element
+            
+        Returns:
+            WebElement: The found element
+        """
+        try:
+            # First try to find element without scrolling
+            element = self.driver.find_element(by, value)
+            # Scroll to center the element in view
+            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+            return element
+        except:
+            # If not found, scroll down progressively to find it
+            max_scrolls = 20
+            scroll_height = 800
+            
+            for i in range(max_scrolls):
+                try:
+                    element = self.driver.find_element(by, value)
+                    self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+                    return element
+                except:
+                    self.driver.execute_script(f"window.scrollBy(0, {scroll_height});")
+                    time.sleep(0.5)
+            
+            # If still not found, use explicit wait
+            wait = WebDriverWait(self.driver, timeout)
+            element = wait.until(EC.presence_of_element_located((by, value)))
+            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+            return element
 
     def element_exists(self, by, value):
         """Check if an element exists on the page
