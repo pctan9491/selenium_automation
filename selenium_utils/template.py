@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -185,31 +186,84 @@ class SeleniumTemplate:
         Returns:
             WebElement: The found element
         """
+        
         try:
             # First try to find element without scrolling
             element = self.driver.find_element(by, value)
             # Scroll to center the element in view
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+            # Wait a moment for scroll to complete
+            time.sleep(1)
+            # Check if element is clickable after scroll
+            self._ensure_element_clickable(element)
             return element
         except:
             # If not found, scroll down progressively to find it
-            max_scrolls = 20
-            scroll_height = 800
+            max_scrolls = 10
+            scroll_height = 500
             
             for i in range(max_scrolls):
                 try:
                     element = self.driver.find_element(by, value)
                     self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+                    time.sleep(1)
+                    self._ensure_element_clickable(element)
                     return element
                 except:
                     self.driver.execute_script(f"window.scrollBy(0, {scroll_height});")
-                    time.sleep(0.5)
+                    time.sleep(2)
             
             # If still not found, use explicit wait
             wait = WebDriverWait(self.driver, timeout)
             element = wait.until(EC.presence_of_element_located((by, value)))
             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+            time.sleep(1)
+            self._ensure_element_clickable(element)
             return element
+    
+    def _dismiss_overlays(self):
+        """Try to dismiss common overlays like cookie banners, popups, etc."""
+        overlay_selectors = [
+            # Common cookie banner selectors
+            "//button[contains(text(), 'Accept')]",
+            "//button[contains(text(), 'OK')]", 
+            "//button[contains(text(), 'Got it')]",
+            "//button[contains(@class, 'cookie')]",
+            "//div[contains(@class, 'cookie')]//button",
+            "//span[contains(@class, 'cookie-text')]/..//button",
+            # Close buttons
+            "//button[contains(@aria-label, 'Close')]",
+            "//button[contains(@class, 'close')]",
+            "//span[contains(@class, 'close')]",
+            # Modal dismiss buttons
+            "//div[contains(@class, 'modal')]//button[contains(@class, 'close')]",
+            "//div[contains(@class, 'popup')]//button"
+        ]
+        
+        for selector in overlay_selectors:
+            try:
+                overlay_element = self.driver.find_element(By.XPATH, selector)
+                if overlay_element.is_displayed():
+                    self.driver.execute_script("arguments[0].click();", overlay_element)
+                    time.sleep(0.5)
+                    break  # Only dismiss one overlay at a time
+            except:
+                continue
+    
+    def _ensure_element_clickable(self, element):
+        """Ensure element is clickable by checking for overlays"""
+        try:
+            # Try to click the element to see if it's intercepted
+            self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
+            time.sleep(0.5)
+            
+            # Check if element is actually clickable
+            wait = WebDriverWait(self.driver, 2)
+            wait.until(EC.element_to_be_clickable(element))
+        except TimeoutException:
+            # If not clickable, try to dismiss overlays again
+            self._dismiss_overlays()
+            time.sleep(0.5)
 
     def element_exists(self, by, value):
         """Check if an element exists on the page

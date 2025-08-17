@@ -56,6 +56,7 @@ class ExAndInWait(SeleniumTemplate, unittest.TestCase):
             )
             print("Found and clicked Fundamentals Intro link")
             fundamentals_intro_link.click()
+            time.sleep(10)
             print("Clicked Fundamentals introduction link")
 
             
@@ -65,7 +66,6 @@ class ExAndInWait(SeleniumTemplate, unittest.TestCase):
             print(f"An unexpected error occurred: {e}")
         finally:
             # Comment out automatic browser closing to allow manual closing
-            # if hasattr(self, 'driver') and self.driver:
-            #     self.driver.quit()
-            #     print("Browser closed.")
-            print("Script completed. Browser left open for manual closing.")
+            if hasattr(self, 'driver') and self.driver:
+                self.driver.quit()
+                print("Browser closed.")
