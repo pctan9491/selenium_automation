@@ -7,11 +7,10 @@ from selenium.common.exceptions import TimeoutException, WebDriverException
 
 class SeleniumTemplate:
     def __init__(self, timeout=30, browser_type="chrome"):
-        """Initialize the Selenium template with configurable timeout and browser type"""
         self.timeout = timeout
-        self.browser_type = browser_type.lower()
+        self.browser_type = browser_type
         self.driver = None
-        
+
     def setup_driver(self, headless=False):
         """Setup and configure WebDriver based on browser type"""
         if self.browser_type == "chrome":
@@ -25,12 +24,13 @@ class SeleniumTemplate:
         else:
             raise ValueError(f"Unsupported browser type: {self.browser_type}")
 
-        # Common options
+        # Simple, working options (like writing_test.py uses)
         options.add_argument('--start-maximized')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         options.add_argument('--ignore-certificate-errors')
         options.add_argument('--disable-gpu')
+        
         if headless:
             options.add_argument('--headless')
         
@@ -39,6 +39,10 @@ class SeleniumTemplate:
             self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         else:  # edge
             self.driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()), options=options)
+        
+        # Standard timeouts (like writing_test.py)
+        self.driver.set_page_load_timeout(60)
+        self.driver.implicitly_wait(30)
             
         return self.driver
     

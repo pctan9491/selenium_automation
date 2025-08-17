@@ -17,7 +17,7 @@ from selenium_utils.template import SeleniumTemplate
 
 class ExAndInWait(SeleniumTemplate, unittest.TestCase):
     def __init__(self, methodName='runTest'):
-        SeleniumTemplate.__init__(self, timeout=30, browser_type="edge")  # Specify browser type here
+        SeleniumTemplate.__init__(self, timeout=30) 
         unittest.TestCase.__init__(self, methodName)
         self.base_url = "https://www.geeksforgeeks.org/"
 

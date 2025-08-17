@@ -17,15 +17,16 @@ from selenium_utils.template import SeleniumTemplate
 
 class AssertLearn(SeleniumTemplate, unittest.TestCase):
     def __init__(self, methodName='runTest'):
-        SeleniumTemplate.__init__(self, timeout=30, browser_type="edge")  # Specify browser type here
+        # Use the same simple initialization as writing_test.py
+        SeleniumTemplate.__init__(self, timeout=30)
         unittest.TestCase.__init__(self, methodName)
         self.base_url = "https://www.geeksforgeeks.org/"
 
     def test_assert_learn(self):
         try:
-            # Setup the driver first
+            # Use simple setup_driver call like writing_test.py
             self.setup_driver(headless=False)
-            wait = WebDriverWait(self.driver, 10)
+            wait = WebDriverWait(self.driver, 30)
             
             # Navigate to URL
             print(f"\nNavigating to: {self.base_url}")
