@@ -12,6 +12,9 @@ from tests.geeks_login import geeksLogin
 from basic.writing_test import WritingTest
 from basic.assert_learn import AssertLearn
 from basic.wait import ExAndInWait
+from basic.action_chain import ActionChainTest
+
+
 
 def check_internet_connectivity(url="https://www.geeksforgeeks.org/", timeout=5):
     """
@@ -35,5 +38,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Run tests
-    suite = unittest.TestLoader().loadTestsFromTestCase(ExAndInWait)
+    suite = unittest.TestLoader().loadTestsFromTestCase(ActionChainTest)
+
     unittest.TextTestRunner(verbosity=2).run(suite)
