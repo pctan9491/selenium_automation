@@ -2,6 +2,8 @@ import time
 import unittest
 import sys
 import os
+import pyperclip
+
 
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -34,7 +36,7 @@ class ActionChainTest(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.action_chain_click_and_hold()
+            self.action_chain_move_by_offset()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -49,7 +51,11 @@ class ActionChainTest(SeleniumTemplate, unittest.TestCase):
     def action_chain_clicked(self):
         # Click method
         click_element = self.wait_for_clickable(By.XPATH, '//*[@id="topMainHeader"]/div/ul/li[1]/span/div')
+        
+        #Action Chain step 1
         action = ActionChains(self.driver)
+
+        #Action Chain step 2 and 3 (perform)
         action.click(click_element).perform()
         print("Successfully perform action chain for click!")
         # Wait a bit to see the result
@@ -61,13 +67,155 @@ class ActionChainTest(SeleniumTemplate, unittest.TestCase):
         click_and_hold_element = self.wait_for_clickable(By.XPATH, '//*[@id="topMainHeader"]/div/a/div/img')
         target = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
 
+        #Action Chain step 1
         action = ActionChains(self.driver)
-        action.click_and_hold(click_and_hold_element)
+
+        #Action Chain step 2
+        action.click_and_hold(on_element=click_and_hold_element)
         action.move_to_element(target)
         action.release(target)
+        #Action Chain step 3 (perform)
         action.perform()
         target.send_keys(Keys.RETURN)
 
         print("Successfully perform action chain for click and hold!")
+        # Wait a bit to see the result
+        time.sleep(3)
+
+        #test action chain: click and hold
+    def action_chain_context_click(self):
+        # Context click method
+        # imagine i want copy a text
+        pyperclip.copy("text copy")
+        target = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+
+        action = ActionChains(self.driver)
+        action.context_click(on_element=target)
+        action.perform()
+
+        print("Successfully perform action chain for context click!")
+        # Wait a bit to see the result
+        time.sleep(3)
+    
+    def action_chain_drag_and_drop(self):
+        # Click method
+        click_and_hold_element = self.wait_for_clickable(By.XPATH, '//*[@id="topMainHeader"]/div/a/div/img')
+        target = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+
+        #Action Chain step 1
+        action = ActionChains(self.driver)
+
+        #Action Chain step 2
+        action.drag_and_drop(on_element=click_and_hold_element, target_element=target)
+
+        #Action Chain step 3 (perform)
+        action.perform()
+        target.send_keys(Keys.RETURN)
+
+        print("Successfully perform action chain for drag and drop!")
+        # Wait a bit to see the result
+        time.sleep(3)
+    
+    def action_chain_double_click(self):
+        target = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        target.send_keys('Testing_for_double_click')
+
+        #Action Chain step 1
+        action = ActionChains(self.driver)
+
+        #Action Chain step 2
+        action.double_click(on_element=target)
+
+        #Action Chain step 3 (perform)
+        action.perform()
+        print("Successfully perform action chain for double click!")
+        # Wait a bit to see the result
+        time.sleep(3)
+
+    def action_chain_key_down_key_up(self):
+        target = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        target.send_keys('Testing_for_key_down_key_up')
+        time.sleep(3)
+
+        #Action Chain step 1
+        action = ActionChains(self.driver)
+
+        #Action Chain step 2
+        action.key_down(Keys.CONTROL, target).send_keys('A').key_up(Keys.CONTROL, target)
+        action.key_down(Keys.CONTROL, target).send_keys('X').key_up(Keys.CONTROL, target)
+
+        #Action Chain step 3 (perform)
+        action.perform()
+        print("Successfully perform action chain for key down and key up!")
+        # Wait a bit to see the result
+        time.sleep(3)
+
+    def action_chain_move_by_offset(self):
+
+        target = self.wait_for_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+
+        # Get initial element position as reference point
+        initial_element_location = target.location
+        print(f"Target element location: x={initial_element_location['x']}, y={initial_element_location['y']}")
+        
+        # Create a tracking element to monitor cursor position
+        tracking_script = """
+        // Create a hidden div to track mouse position
+        if (!window.mouseTracker) {
+            window.mouseTracker = {x: 0, y: 0};
+            document.addEventListener('mousemove', function(e) {
+                window.mouseTracker.x = e.clientX;
+                window.mouseTracker.y = e.clientY;
+            });
+        }
+        return {x: window.mouseTracker.x, y: window.mouseTracker.y};
+        """
+        
+        # Initialize mouse tracking
+        self.driver.execute_script(tracking_script)
+        time.sleep(0.1)  # Brief pause to initialize
+        
+        # Get initial cursor position
+        initial_position = self.driver.execute_script("return {x: window.mouseTracker.x, y: window.mouseTracker.y};")
+        print(f"Initial cursor position: x={initial_position['x']}, y={initial_position['y']}")
+    
+        #Action Chain step 1
+        action = ActionChains(self.driver)
+    
+        #Action Chain step 2: move the cursor
+        print("Moving cursor by offset (100, 100)...")
+        action.move_by_offset(100, 100)
+        window_position = self.driver.get_window_position()
+        window_size = self.driver.get_window_size()
+        print(f"Window position: x={window_position['x']}, y={window_position['y']}")
+        print(f"Window size: width={window_size['width']}, height={window_size['height']}")
+        action.click()
+        
+        #Action Chain step 3 (perform)
+        action.perform()
+        
+        # Check cursor position after first move
+        time.sleep(0.5)  # Allow time for movement and event to register
+        position_after_first_move = self.driver.execute_script("return {x: window.mouseTracker.x, y: window.mouseTracker.y};")
+        print(f"Cursor position after first move: x={position_after_first_move['x']}, y={position_after_first_move['y']}")
+        
+        # Calculate movement distance
+        x_movement = position_after_first_move['x'] - initial_position['x']
+        y_movement = position_after_first_move['y'] - initial_position['y']
+        total_movement = (x_movement**2 + y_movement**2)**0.5
+        
+        print(f"Movement detected: x_offset={x_movement}, y_offset={y_movement}, total_distance={total_movement:.2f}px")
+        
+        # Detect if cursor moved (allowing for small tolerance)
+        if total_movement > 5:  # 5px tolerance for minor variations
+            print("✓ CURSOR MOVEMENT DETECTED: First move_by_offset was successful!")
+            print(f"  Expected: (100, 100), Actual: ({x_movement}, {y_movement})")
+        else:
+            print("✗ NO SIGNIFICANT CURSOR MOVEMENT: First move_by_offset may have failed")
+        
+        target.send_keys('Testing_move_by_offset_after_5s')
+        time.sleep(2)
+    
+        print("\nSuccessfully performed action chain for move by offset with cursor detection!")
         # Wait a bit to see the result
         time.sleep(3)
