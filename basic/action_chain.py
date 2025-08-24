@@ -84,6 +84,7 @@ class ActionChainTest(SeleniumTemplate, unittest.TestCase):
         time.sleep(3)
 
         #test action chain: click and hold
+    
     def action_chain_context_click(self):
         # Context click method
         # imagine i want copy a text
