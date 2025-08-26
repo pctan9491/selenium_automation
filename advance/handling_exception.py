@@ -14,7 +14,7 @@ from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, TimeoutException, NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, ImeActivationFailedException, ImeNotAvailableException, InsecureCertificateException, TimeoutException, NoSuchElementException
 from selenium_utils.template import SeleniumTemplate
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -36,7 +36,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.element_not_visible_exception()
+            self.insecure_certificate_exception()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -112,19 +112,115 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         
         time.sleep(3)
     
-    #test exception: ElementNotVisibleException
-    def element_not_visible_exception(self):
-        #Not suitable to test, because the element is not visible
+    #test exception: ImeActivationFailedException
+    def ime_activation_failed_exception(self):
+        """Test ImeActivationFailedException - occurs when IME (Input Method Editor) activation fails"""
         try:
-            element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[2]/div/div[2]/a[8]')
-            element.click()  # This should trigger ElementNotInteractableException
-            print("Successfully clicked the element.")
-        except ElementNotVisibleException:
-            print("ElementNotVisibleException: Element is not visible.")
+            # Find an input field that might require IME activation
+            search_box = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            
+            # Try to activate IME for non-Latin text input (this might trigger the exception)
+            # Note: This exception is rare and typically occurs on systems with IME support
+            search_box.click()
+            search_box.clear()
+            
+            # Attempt to send keys that might require IME activation
+            # This could potentially trigger ImeActivationFailedException on some systems
+            search_box.send_keys("こんにちは")  # Japanese text that might require IME
+            
+            print("Successfully sent IME text to the element.")
+            
+        except ImeActivationFailedException as e:
+            print(f"ImeActivationFailedException: Failed to activate IME - {e}")
+            print("This typically occurs when:")
+            print("- IME is not properly installed or configured")
+            print("- System doesn't support the required input method")
+            print("- WebDriver cannot communicate with the IME system")
+            
+        except Exception as e:
+            print(f"Other exception occurred: {type(e).__name__}: {e}")
+            
         finally:
-            print("Finished testing.")
+            print("Finished testing IME activation.")
         
         time.sleep(3)
+    
+     #test exception: ElementNotVisibleException
+
+
+     #test exception: ImeActivationFailedException
+    
+    #test exception:ImeNotAvailableException
+    def ime_not_available_exception(self):
+        """Test ImeNotAvailableException - occurs when IME (Input Method Editor) is not available"""
+        try:
+            # Find an input field that might require IME activation
+            search_box = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            
+            # Try to activate IME for non-Latin text input (this might trigger the exception)
+            # Note: This exception is rare and typically occurs on systems with IME support
+            search_box.click()
+            search_box.clear()
+            
+            # Attempt to send keys that might require IME activation
+            # This could potentially trigger ImeActivationFailedException on some systems
+            search_box.send_keys("こんにちは")  # Japanese text that might require IME
+            
+            print("Successfully sent IME text to the element.")
+            
+        except ImeNotAvailableException as e:
+            print(f"ImeNotAvailableException: Failed to activate IME - {e}")
+            print("This typically occurs when:")
+            print("- IME is not properly installed or configured")
+            print("- System doesn't support the required input method")
+            print("- WebDriver cannot communicate with the IME system")
+            
+        except Exception as e:
+            print(f"Other exception occurred: {type(e).__name__}: {e}")
+            
+        finally:
+            print("Finished testing IME not available.")
+        
+        time.sleep(3)
+    
+    #test exception: InsecureCertificateException
+    #test exception: InsecureCertificateException (Simulated)
+    def insecure_certificate_exception(self):
+        """Test InsecureCertificateException - simulate the exception for demonstration"""
+        try:
+            # Try to access a site with SSL issues
+            test_url = "https://self-signed.badssl.com/"
+            print(f"Attempting to access: {test_url}")
+            
+            # Check if the site loads (modern browsers often allow it)
+            self.driver.get(test_url)
+            
+            # Check if we're on an SSL warning page
+            page_source = self.driver.page_source.lower()
+            if any(warning in page_source for warning in ["not secure", "certificate", "ssl", "security"]):
+                print("SSL warning detected - simulating InsecureCertificateException")
+                # Manually raise the exception for demonstration
+                raise InsecureCertificateException("SSL certificate validation failed - certificate is self-signed")
+            
+            print("Site loaded without SSL issues (or browser ignored them)")
+            
+        except InsecureCertificateException as e:
+            print(f"InsecureCertificateException: {e}")
+            print("This exception occurs when:")
+            print("- SSL certificate is self-signed or invalid")
+            print("- Certificate has expired")
+            print("- Certificate hostname doesn't match")
+            print("- Certificate chain is broken")
+            print("- WebDriver is configured to reject invalid certificates")
+            
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+            
+        finally:
+            print("Finished testing insecure certificate.")
+        
+        time.sleep(3)
+
     
 
 
