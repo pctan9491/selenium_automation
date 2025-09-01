@@ -3,6 +3,7 @@ import unittest
 import sys
 import os
 import pyperclip
+from selenium.webdriver.common import desired_capabilities
 
 
 # Add parent directory to path
@@ -14,7 +15,7 @@ from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, ImeActivationFailedException, ImeNotAvailableException, InsecureCertificateException, TimeoutException, NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, ImeActivationFailedException, ImeNotAvailableException, InsecureCertificateException, InvalidArgumentException, InvalidCookieDomainException, InvalidCoordinatesException, InvalidElementStateException, InvalidSelectorException, InvalidSessionIdException, InvalidSwitchToTargetException, NoAlertPresentException, TimeoutException, NoSuchElementException
 from selenium_utils.template import SeleniumTemplate
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -36,7 +37,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.insecure_certificate_exception()
+            self.no_alert_present_exception()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -222,6 +223,166 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         time.sleep(3)
 
     
+    #test exception: InvalidArgumentException
+    def invalid_argument_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            element = self.driver.find_element('By.XPATH', '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            # Intentionally wrong XPath
+            element.send_keys("Hello, World!")
+            print("Successfully sent keys to the element.")
+        except InvalidArgumentException:
+            print("InvalidArgumentException: Invalid argument.")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+   #test exception: InvalidCookieDomainException
+    def invalid_cookie_domain_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            #Define a cookie for a COMPLETELY DIFFERENT domain
+            print("Attempting to add a cookie for the domain 'google.com'...")
+            invalid_cookies = {
+                'name': 'testing',
+                'value': '12345',
+                'domain': '.google.com'
+            }
+            self.driver.add_cookie(invalid_cookies)
+        except InvalidCookieDomainException:
+            print("InvalidCookiesDomainException: Invalid cookies domain.")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+    #test exception: InvalidCoordinatesException
+    def invalid_coordinates_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            self.driver.set_window_size(800,600)
+            element = self.driver.find_element('By.XPATH', '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+
+            print("Attempting to move to the element that is out of view...")
+            action = ActionChains(self.driver)
+
+            action.move_to_element_with_offset(element, 50, 50).click().perform()
+        except InvalidCoordinatesException:
+            print("InvalidCoordinatesException: Invalid coordinates.")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+    #test exception: InvalidElementStateException
+    def invalid_element_state_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            element = self.driver.find_element(By.XPATH, '//*[@id="topMainHeader"]/div/a/div/img')
+            print("Attempting to type into the disable input field...")
+            element.send_keys("Hello, World!")
+
+        except InvalidElementStateException:
+            print("InvalidElementStateException: Element is not enabled.")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+    #test exception: InvalidSelectorException
+    def invalid_selector_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            print("Attempting to find element with invalid xpath")
+            element = self.driver.find_element(By.XPATH, '#comp > div.index_homePageContainer__H8GJD > div.HomePageSearchContainer_homePageSearchContainer__bNc8c > div.HomePageSearchContainer_homePageSearchContainer_container__vWZMD > input')
+            element.send_keys("Hello, World!")
+
+        except InvalidSelectorException:
+            print("InvalidSelectorException: Element is not enabled.")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+    # cannot perform seems
+    #test exception: InvalidSessionIdException
+    def invalid_session_id_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            print(f"Initial page title: {self.driver.title}")
+            element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            print("Quitting the driver session...")
+            session_id = self.driver.session_id
+            self.driver.quit()
+            
+            from selenium.webdriver.remote.webdriver import WebDriver
+            temp_driver = WebDriver(command_executor=self.driver.command_executor, desired_capabilities={})
+            temp_driver.session_id = session_id
+            final_title = temp_driver.title
+
+        except InvalidSessionIdException:
+            print("InvalidSessionIdException: Session ID is invalid.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+  #test exception: InvalidSwitchToTargetException
+    def invalid_switch_to_target_exception(self):
+        # Try to switch to a non-existent frame by name
+        self.driver.switch_to.frame("non_existent_frame")
+        print("Successfully switched to frame (this shouldn't happen)")
+        
+        try:
+            self.driver.switch_to.frame("non_existent_frame")
+            print("Successfully switched to frame (this shouldn't happen)")
+        except InvalidSwitchToTargetException:
+            print("InvalidSwitchToTargetException: Switch to target element is invalid.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        # Make sure to switch back to default content
+        try:
+            self.driver.switch_to.default_content()
+        except:
+            pass
+
+
+ #test exception: NoAlertPresentException
+    def no_alert_present_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            self.driver.switch_to.alert
+            print(f"Alert text: {alert.text}")
+            alert.accept()
+            print("Alert handled successfully (this shouldn't happen)")
+
+        except NoAlertPresentException:
+            print("NoAlertPresentException: No alert is present.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
 
 
 
