@@ -15,7 +15,7 @@ from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, ImeActivationFailedException, ImeNotAvailableException, InsecureCertificateException, InvalidArgumentException, InvalidCookieDomainException, InvalidCoordinatesException, InvalidElementStateException, InvalidSelectorException, InvalidSessionIdException, InvalidSwitchToTargetException, NoAlertPresentException, TimeoutException, NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, ImeActivationFailedException, ImeNotAvailableException, InsecureCertificateException, InvalidArgumentException, InvalidCookieDomainException, InvalidCoordinatesException, InvalidElementStateException, InvalidSelectorException, InvalidSessionIdException, InvalidSwitchToTargetException, NoAlertPresentException, NoSuchAttributeException, NoSuchCookieException, StaleElementReferenceException, TimeoutException, NoSuchElementException
 from selenium_utils.template import SeleniumTemplate
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -37,7 +37,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.no_alert_present_exception()
+            self.stale_element_reference_exception()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -383,6 +383,76 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         
         time.sleep(3)
 
+
+  #test exception: NoSuchAttributeException
+    def no_such_attribute_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            href_value = element.get_attribute("href")
+            print("\nAttempting to get href attribute of a non-existent element...")
+            print(f"href value: {href_value}")
+
+        except NoSuchAttributeException:
+            print("NoSuchAttributeException: Attribute is not found.")
+        except InvalidArgumentException:
+            print("InvalidArgumentException: Invalid argument passed to get_attribute.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+#test exception:NoSuchCookieException
+    def no_such_cookie_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            print("Attempting to delete a cookie that does not exist...")
+            cookie_name = "session_id"
+            cookie = self.driver.get_cookie(cookie_name)
+
+            if cookie is None:
+                raise NoSuchCookieException(f"Cookie '{cookie_name}' not found")
+
+            self.driver.delete_cookie(cookie_name)
+            print("Cookie deleted successfully")
+
+        except NoSuchCookieException as e:
+            print("NoSuchCookieException: Cookie is not found.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+ #test exception:StaleElementReferenceException
+    def stale_element_reference_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        
+        try:
+            element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[3]/a[1]')
+            print(f"Initially found item with text: {element.text}")
+            
+            print("List has been refreshed")
+            self.driver.refresh()
+
+            print("Attempting to click the element using old reference...")
+            element.click()
+
+        except StaleElementReferenceException:
+            print("StaleElementReferenceException: Element is not found.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
 
 
 
