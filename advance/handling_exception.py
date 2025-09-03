@@ -15,7 +15,7 @@ from selenium.webdriver.edge.service import Service
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, ImeActivationFailedException, ImeNotAvailableException, InsecureCertificateException, InvalidArgumentException, InvalidCookieDomainException, InvalidCoordinatesException, InvalidElementStateException, InvalidSelectorException, InvalidSessionIdException, InvalidSwitchToTargetException, NoAlertPresentException, NoSuchAttributeException, NoSuchCookieException, StaleElementReferenceException, TimeoutException, NoSuchElementException
+from selenium.common.exceptions import ElementClickInterceptedException, ElementNotInteractableException, ElementNotVisibleException, ImeActivationFailedException, ImeNotAvailableException, InsecureCertificateException, InvalidArgumentException, InvalidCookieDomainException, InvalidCoordinatesException, InvalidElementStateException, InvalidSelectorException, InvalidSessionIdException, InvalidSwitchToTargetException, NoAlertPresentException, NoSuchAttributeException, NoSuchCookieException, StaleElementReferenceException, TimeoutException, NoSuchElementException, UnableToSetCookieException
 from selenium_utils.template import SeleniumTemplate
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -37,7 +37,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.stale_element_reference_exception()
+            self.unable_to_set_cookie_exception()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -342,7 +342,8 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         time.sleep(3)
 
 
-  #test exception: InvalidSwitchToTargetException
+     #test exception: InvalidSwitchToTargetException  
+   
     def invalid_switch_to_target_exception(self):
         # Try to switch to a non-existent frame by name
         self.driver.switch_to.frame("non_existent_frame")
@@ -364,7 +365,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
             pass
 
 
- #test exception: NoAlertPresentException
+    #test exception: NoAlertPresentException
     def no_alert_present_exception(self):
         #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
         
@@ -384,7 +385,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         time.sleep(3)
 
 
-  #test exception: NoSuchAttributeException
+    #test exception: NoSuchAttributeException
     def no_such_attribute_exception(self):
         #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
         
@@ -406,7 +407,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         time.sleep(3)
 
 
-#test exception:NoSuchCookieException
+    #test exception:NoSuchCookieException
     def no_such_cookie_exception(self):
         #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
         
@@ -431,7 +432,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         time.sleep(3)
 
 
- #test exception:StaleElementReferenceException
+    #test exception:StaleElementReferenceException
     def stale_element_reference_exception(self):
         #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
         
@@ -455,5 +456,47 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         time.sleep(3)
 
 
+  #test exception: TimeoutException
+    def timeout_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+        wait = WebDriverWait(self.driver, 0.01)
 
+        try:
+            element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[3]/a[2]')
+            element.click()
+            print("Waiting for the result container to appear...")
+            results = wait.until(EC.visibility_of_element_located((By.XPATH, '//*[@id="__next"]/div/div[4]/div[1]/section[1]/div[2]/div/div[2]/div[3]/div[2]')))
+
+        except TimeoutException as e:
+            print("TimeoutException: Element is not found.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
+
+
+#test exception: UnableToSetCookieException
+    def unable_to_set_cookie_exception(self):
+        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
+
+        try:
+            print("Set cookie...")
+            cookie = {
+            "name": "test", 
+            "value": "123",
+            "domain": "invalid-domain.com"  # Different domain than current page
+        }
+            self.driver.add_cookie(cookie)
+            print("Cookie set successfully (this shouldn't happen)")
+
+        except UnableToSetCookieException as e:
+            print("UnableToSetCookieException: Cookie is not set.")
+        except Exception as e:
+            print(f"Other exception: {type(e).__name__}: {e}")
+        finally:
+            print("Finished testing.")
+        
+        time.sleep(3)
 
