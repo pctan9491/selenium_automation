@@ -146,11 +146,6 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         
         time.sleep(3)
     
-     #test exception: ElementNotVisibleException
-
-
-     #test exception: ImeActivationFailedException
-    
     #test exception:ImeNotAvailableException
     def ime_not_available_exception(self):
         """Test ImeNotAvailableException - occurs when IME (Input Method Editor) is not available"""
