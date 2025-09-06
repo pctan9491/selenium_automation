@@ -37,7 +37,7 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.unable_to_set_cookie_exception()
+            self.invalid_coordinates_exception()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -262,12 +262,12 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
         
         try:
             self.driver.set_window_size(800,600)
-            element = self.driver.find_element('By.XPATH', '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+            #element = self.driver.find_element('By.XPATH', '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
 
             print("Attempting to move to the element that is out of view...")
             action = ActionChains(self.driver)
 
-            action.move_to_element_with_offset(element, 50, 50).click().perform()
+            action.move_by_offset(10000, 10000).perform()
         except InvalidCoordinatesException:
             print("InvalidCoordinatesException: Invalid coordinates.")
         finally:
@@ -372,28 +372,6 @@ class HandlingException(SeleniumTemplate, unittest.TestCase):
 
         except NoAlertPresentException:
             print("NoAlertPresentException: No alert is present.")
-        except Exception as e:
-            print(f"Other exception: {type(e).__name__}: {e}")
-        finally:
-            print("Finished testing.")
-        
-        time.sleep(3)
-
-
-    #test exception: NoSuchAttributeException
-    def no_such_attribute_exception(self):
-        #true element: //*[@id="comp"]/div[2]/div[1]/div[2]/input (search box in geeks to geeks)
-        
-        try:
-            element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
-            href_value = element.get_attribute("href")
-            print("\nAttempting to get href attribute of a non-existent element...")
-            print(f"href value: {href_value}")
-
-        except NoSuchAttributeException:
-            print("NoSuchAttributeException: Attribute is not found.")
-        except InvalidArgumentException:
-            print("InvalidArgumentException: Invalid argument passed to get_attribute.")
         except Exception as e:
             print(f"Other exception: {type(e).__name__}: {e}")
         finally:
