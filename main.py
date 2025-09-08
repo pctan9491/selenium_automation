@@ -14,6 +14,7 @@ from basic.assert_learn import AssertLearn
 from basic.wait import ExAndInWait
 from basic.action_chain import ActionChainTest
 from advance.handling_exception import HandlingException
+from advance.special_key import SpecialKey
 
 
 
@@ -39,6 +40,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Run tests
-    suite = unittest.TestLoader().loadTestsFromTestCase(HandlingException)
+    suite = unittest.TestLoader().loadTestsFromTestCase(SpecialKey)
 
     unittest.TextTestRunner(verbosity=2).run(suite)
