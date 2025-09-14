@@ -38,7 +38,7 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.sk_arrow_up_down()
+            self.sk_decimal()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -114,6 +114,47 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
             actions.reset_actions()
         assert True, "Arrow up and down perform successfully"
         print("Arrow up and down perform successfully.")
+
+
+    # Special Key: BACKSPACE
+    def sk_backspace(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys("Test for BACKSPACEE")
+        print(f"Add key pressed with value: {element.get_attribute('value')}")
+        time.sleep(3)
+        for i in range(len(element.get_attribute('value'))):
+            element.send_keys(Keys.BACK_SPACE)
+        time.sleep(4)
+        assert element.get_attribute('value') == ''  # After backspacing all characters, the value should be empty
+        print("Backspace key pressed successfully.")
+
+
+    # Special Key: DECIMAL
+    def sk_decimal(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys("123")
+        time.sleep(1)
+        element.send_keys(Keys.DECIMAL)
+        time.sleep(1)
+        element.send_keys("456")
+        time.sleep(3)
+        print(f"Add key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == '123.456'  # After backspacing all characters, the value should be empty
+        print("Decimal key pressed successfully.")
+
+
 
 
 
