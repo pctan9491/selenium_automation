@@ -38,7 +38,7 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.sk_decimal()
+            self.sk_enter()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -154,6 +154,87 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
         assert element.get_attribute('value') == '123.456'  # After backspacing all characters, the value should be empty
         print("Decimal key pressed successfully.")
 
+
+    # Special Key: DELETE
+    def sk_delete(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys("Test for Delete")
+        time.sleep(3)
+
+        for i in range(5):
+            element.send_keys(Keys.ARROW_LEFT)
+            time.sleep(1)
+            element.send_keys(Keys.DELETE)
+            time.sleep(1)
+        
+        print(f"Delete key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'Test for D'  # After backspacing all characters, the value should be empty
+        print("Delete key pressed successfully.")
+
+
+    # Special Key: DIVIDE
+    def sk_divide(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys(
+            Keys.NUMPAD1,
+            Keys.NUMPAD0,
+            Keys.NUMPAD0,
+            Keys.DIVIDE,
+            Keys.NUMPAD5
+        )
+        time.sleep(3)
+
+        print(f"Devide key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == '100/5'  # After backspacing all characters, the value should be empty
+        print("Divide key pressed successfully.")
+
+
+    # Special Key: HOME AND END
+    def sk_home_end(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys("test for end")
+        time.sleep(1)
+        element.send_keys(Keys.HOME)
+        time.sleep(1)
+        element.send_keys(Keys.END)
+        time.sleep(3)
+        print(f"Home and End key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'test for end'  # After backspacing all characters, the value should be empty
+        print("Home and End key pressed successfully.")
+
+
+    # Special Key: ENTER
+    def sk_enter(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys("test for enter")
+        time.sleep(2)
+        element.send_keys(Keys.ENTER)
+        time.sleep(3)
+        print("Enter key pressed successfully.")
 
 
 
