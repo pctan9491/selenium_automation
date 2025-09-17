@@ -38,7 +38,7 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.sk_enter()
+            self.sk_insert()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -235,6 +235,44 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
         element.send_keys(Keys.ENTER)
         time.sleep(3)
         print("Enter key pressed successfully.")
+
+
+    # Special Key: EQUALS
+    def sk_equals(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys(Keys.EQUALS)
+        time.sleep(3)
+        print(f"Equals key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == '=' 
+        print("Equals key pressed successfully.")
+
+
+    # Special Key: INSERT
+    def sk_insert(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys('Test for insert')
+        time.sleep(2)
+        actions = ActionChains(self.driver)
+        actions.key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).perform()
+        actions.reset_actions()
+        actions.key_down(Keys.CONTROL).send_keys(Keys.INSERT).key_up(Keys.CONTROL).perform()
+        time.sleep(2)
+        print(f"Insert key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'Test for insert' 
+        print("Insert key pressed successfully.")
+
 
 
 
