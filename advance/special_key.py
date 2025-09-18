@@ -38,7 +38,7 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.sk_insert()
+            self.sk_page_down_up()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -272,6 +272,72 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
         print(f"Insert key pressed with value: {element.get_attribute('value')}")
         assert element.get_attribute('value') == 'Test for insert' 
         print("Insert key pressed successfully.")
+
+
+    # Special Key: LEFT AND RIGHT
+    def sk_left_right(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys('Test for left and right')
+        time.sleep(2)
+        
+        for i in range(5):
+            element.send_keys(Keys.RIGHT)
+            time.sleep(1)
+        for i in range(3):
+            element.send_keys(Keys.LEFT)
+            time.sleep(1)
+        
+        time.sleep(2)
+        print(f"Insert key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'Test for left and right' 
+        print("Left and Right key pressed successfully.")
+
+
+    # Special Key: MULTIPLY
+    def sk_multiply(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys('Test for multiply ')
+        time.sleep(2)
+        element.send_keys(Keys.MULTIPLY)
+        time.sleep(2)
+        print(f"Multiply key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'Test for multiply *' 
+        print("Multiply key pressed successfully.")
+
+
+    # Special Key: PAGE DOWN AND UP
+    def sk_page_down_up(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.TAG_NAME, 'body')
+        for i in range(5):
+            element.send_keys(Keys.PAGE_DOWN)
+            print(f"Page down {i+1} times")
+            time.sleep(1)
+        
+        for i in range(4):
+            element.send_keys(Keys.PAGE_UP)
+            print(f"Page up {i+1} times")
+            time.sleep(1)
+
+        print("Page down and up key pressed successfully.")
+
 
 
 
