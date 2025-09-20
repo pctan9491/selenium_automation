@@ -38,7 +38,7 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.sk_page_down_up()
+            self.sk_subtract()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -337,6 +337,61 @@ class SpecialKey(SeleniumTemplate, unittest.TestCase):
             time.sleep(1)
 
         print("Page down and up key pressed successfully.")
+
+
+    # Special Key: SEMICOLON
+    def sk_semicolon(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys('Test for semicolon ')
+        time.sleep(2)
+        element.send_keys(Keys.SEMICOLON)
+        time.sleep(2)
+        print(f"Semicolon key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'Test for semicolon ;' 
+        print("Semicolon key pressed successfully.")
+
+
+    # Special Key: SEPERATOR
+    def sk_separator(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys('Test for separator ')
+        time.sleep(2)
+        element.send_keys(Keys.SEPARATOR)
+        time.sleep(2)
+        print(f"Separator key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'Test for separator ' 
+        print("Separator key pressed successfully.")
+
+
+    # Special Key: SUBTRACT
+    def sk_subtract(self):
+
+        #Setup the driver if not already done
+        if not hasattr(self, 'driver') or self.driver is None:
+            self.setup_driver(headless=False)
+            self.driver.get(self.base_url)
+
+        element = self.driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[1]/div[2]/input')
+        element.send_keys('Test for subtract ')
+        time.sleep(2)
+        element.send_keys(Keys.SUBTRACT)
+        time.sleep(2)
+        print(f"Subtract key pressed with value: {element.get_attribute('value')}")
+        assert element.get_attribute('value') == 'Test for subtract -' 
+        print("Subtract key pressed successfully.")
+
 
 
 
