@@ -38,7 +38,7 @@ class AlertPrompt(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.sk_subtract()
+            self.alert_dismiss()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -47,3 +47,51 @@ class AlertPrompt(SeleniumTemplate, unittest.TestCase):
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
                 print("Browser closed.")
+    
+    def alert_accept(self):
+        try:
+            print("Switching to alert...")
+            self.driver.execute_script("alert('Test Alert');")
+            WebDriverWait(self.driver, 10).until(EC.alert_is_present())
+            alert = self.driver.switch_to.alert
+            
+            #Get the text from the alert and print it
+            alert_text = alert.text
+            print(f"Alert text: {alert_text}")
+            time.sleep(3)
+
+            #Accept the alert
+            alert.accept()
+            print("Alert accepted.")
+            time.sleep(3)
+        except NoAlertPresentException:
+            print("No alert present.")
+        except Exception as e:
+            print(f"An error occurred while accepting the alert: {e}")
+
+
+    def alert_dismiss(self):
+        try:
+            print("Switching to alert...")
+            self.driver.execute_script("return window.confirm('Test dismiss alert');")
+            WebDriverWait(self.driver, 10).until(EC.alert_is_present())
+            alert = self.driver.switch_to.alert
+            
+            #Get the text from the alert and print it
+            alert_text = alert.text
+            print(f"Alert text: {alert_text}")
+            time.sleep(3)
+
+            #Accept the alert
+            alert.dismiss()
+            print("Alert dismissed.")
+            time.sleep(3)
+        except NoAlertPresentException:
+            print("No alert present.")
+        except Exception as e:
+            print(f"An error occurred while accepting the alert: {e}")
+
+
+
+
+

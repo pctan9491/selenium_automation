@@ -15,6 +15,7 @@ from basic.wait import ExAndInWait
 from basic.action_chain import ActionChainTest
 from advance.handling_exception import HandlingException
 from advance.special_key import SpecialKey
+from advance.alert_prompt import AlertPrompt
 
 
 
@@ -40,6 +41,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Run tests
-    suite = unittest.TestLoader().loadTestsFromTestCase(SpecialKey)
+    suite = unittest.TestLoader().loadTestsFromTestCase(AlertPrompt)
 
     unittest.TextTestRunner(verbosity=2).run(suite)
