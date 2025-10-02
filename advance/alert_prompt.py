@@ -38,7 +38,7 @@ class AlertPrompt(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.alert_dismiss()
+            self.alert_send_keys()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -90,6 +90,56 @@ class AlertPrompt(SeleniumTemplate, unittest.TestCase):
             print("No alert present.")
         except Exception as e:
             print(f"An error occurred while accepting the alert: {e}")
+
+
+    def alert_send_keys(self):
+        try:
+            user_name_to_send = 'Alex'
+            
+            print("Executing script to create prompt...")
+            # Create the prompt with empty default value
+            self.driver.execute_script("window.user_prompt_result = prompt('Please enter your name:', '');")
+
+            # Wait for the alert to be present and switch to it
+            WebDriverWait(self.driver, 10).until(EC.alert_is_present())
+            alert = self.driver.switch_to.alert
+            print("Switched to alert.")
+
+            # Get the alert text
+            alert_text = alert.text
+            print(f"Alert text: {alert_text}")
+
+            print(f"Clearing field and sending keys: '{user_name_to_send}'")
+            
+            # Method 1: Clear using backspace and then send text
+            alert.send_keys(Keys.CONTROL + "a")  # Select all
+            alert.send_keys(Keys.DELETE)         # Delete selected text
+            alert.send_keys(user_name_to_send)   # Send new text
+            
+            time.sleep(5)  # Long pause so you can see the text clearly
+
+            print("You should now see 'Alex' in the input field")
+            time.sleep(2)
+            
+            alert.accept()
+            print("Alert accepted.")
+
+            # Now, we retrieve the result that was stored in the window object
+            time.sleep(1)
+            final_result = self.driver.execute_script("return window.user_prompt_result;")
+            
+            print("--- VERIFICATION ---")
+            print(f"Value returned from the prompt was: '{final_result}'")
+
+            if final_result == user_name_to_send:
+                print("SUCCESS: The text was sent and verified correctly.")
+            else:
+                print(f"FAILURE: Verification failed! Expected '{user_name_to_send}' but got '{final_result}'.")
+
+        except NoAlertPresentException:
+            print("No alert present.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
 
 
