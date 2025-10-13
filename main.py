@@ -17,6 +17,7 @@ from advance.handling_exception import HandlingException
 from advance.special_key import SpecialKey
 from advance.alert_prompt import AlertPrompt
 from advance.adding_deleting_cookies import AddingDeletingCookies
+from advance.assert_testng import AssertTestNG
 
 
 
@@ -42,6 +43,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Run tests
-    suite = unittest.TestLoader().loadTestsFromTestCase(AddingDeletingCookies)
+    suite = unittest.TestLoader().loadTestsFromTestCase(AssertTestNG)
 
     unittest.TextTestRunner(verbosity=2).run(suite)
