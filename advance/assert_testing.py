@@ -68,6 +68,8 @@ class AssertTestNG(SeleniumTemplate, unittest.TestCase):
             print("Assert true passed.")
         except AssertionError as e:
             print(f"Assert true failed: {e}")
+    
+    
 
 
 
