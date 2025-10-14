@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from re import A
 import time
 import unittest
@@ -21,7 +22,7 @@ from selenium_utils.template import SeleniumTemplate
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 
-class AssertTestNG(SeleniumTemplate, unittest.TestCase):
+class AssertTesting(SeleniumTemplate, unittest.TestCase):
     def __init__(self, methodName='runTest'):
         SeleniumTemplate.__init__(self, timeout=30) 
         unittest.TestCase.__init__(self, methodName)
@@ -38,7 +39,7 @@ class AssertTestNG(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
              # Updated method call
-            self.assert_true_testing()
+            self.assert_is_not_none_testing()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -63,13 +64,45 @@ class AssertTestNG(SeleniumTemplate, unittest.TestCase):
         try:
             page_title = self.driver.title
             word_element = self.driver.find_element(By.XPATH, "//*[@id='comp']/div[2]/div[1]/div[1]")
-            # Assert equal
+            # Assert true
             self.assertTrue("GeeksforGeeks" in page_title, f"Page title does not contain 'GeeksforGeeks': {page_title}")
             print("Assert true passed.")
         except AssertionError as e:
             print(f"Assert true failed: {e}")
     
-    
+    def assert_false_testing(self):
+        try:
+            page_title = self.driver.title
+            word_element = self.driver.find_element(By.XPATH, "//*[@id='comp']/div[2]/div[1]/div[1]")
+            # Assert false
+            self.assertFalse("TutorialPoint" in page_title, f"Expected 'TutorialsPoint' not to be in title, but it was found in '{page_title}'")
+            print("Assert false passed.")
+        except AssertionError as e:
+            print(f"Assert false failed: {e}")
+
+
+    def assert_is_none_testing(self):
+        try:
+            page_title = self.driver.title
+            word_element = self.driver.find_element(By.XPATH, "//*[@id='comp']/div[2]/div[1]/div[1]")
+            word_element = None
+            # Assert is none
+            self.assertIsNone(word_element, f"Expected word_element to be None, but it was found: {word_element}")
+            print("Assert is none passed.")
+        except AssertionError as e:
+            print(f"Assert is none failed: {e}")
+
+
+    def assert_is_not_none_testing(self):
+        try:
+            page_title = self.driver.title
+            word_element = self.driver.find_element(By.XPATH, "//*[@id='comp']/div[2]/div[1]/div[1]")
+            # Assert is not none
+            self.assertIsNotNone(word_element, f"Expected word_element to be not None, but it was found: {word_element}")
+            print("Assert is not none passed.")
+        except AssertionError as e:
+            print(f"Assert is not none failed: {e}")
+
 
 
 
