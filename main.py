@@ -18,6 +18,7 @@ from advance.special_key import SpecialKey
 from advance.alert_prompt import AlertPrompt
 from advance.adding_deleting_cookies import AddingDeletingCookies
 from advance.assert_testing import AssertTesting
+from advance.pom_reuse import PomTesting
 
 
 
@@ -43,6 +44,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Run tests
-    suite = unittest.TestLoader().loadTestsFromTestCase(AssertTesting)
+    suite = unittest.TestLoader().loadTestsFromTestCase(PomTesting)
 
     unittest.TextTestRunner(verbosity=2).run(suite)
