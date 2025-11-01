@@ -1,3 +1,4 @@
+import os
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,11 +14,18 @@ class SeleniumTemplate:
         self.driver = None
 
     def setup_driver(self, headless=False):
-        """Setup and configure WebDriver based on browser type"""
         if self.browser_type == "chrome":
             from selenium.webdriver.chrome.service import Service
             from webdriver_manager.chrome import ChromeDriverManager
             options = webdriver.ChromeOptions()
+
+            # Use a custom user data directory for automation
+            user_data_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "chrome_data")
+            if not os.path.exists(user_data_dir):
+                os.makedirs(user_data_dir)
+            options.add_argument(f"user-data-dir={user_data_dir}")
+            options.add_argument("--no-first-run")
+            options.add_argument("--no-default-browser-check")
         elif self.browser_type == "edge":
             from selenium.webdriver.edge.service import Service
             from webdriver_manager.microsoft import EdgeChromiumDriverManager
