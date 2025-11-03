@@ -31,15 +31,14 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
         try:
             # Setup the driver first
             self.setup_driver(headless=False)
-            CHROME_PROFILE_PATH = "C:\Users\User\AppData\Local\Google\Chrome\User Data\Default"
             
             # Navigate to URL
             print(f"\nNavigating to: {self.base_url}")
             self.driver.get(self.base_url)
             print("Page loaded successfully.")
 
-             # Updated method call
-            self.invalid_coordinates_exception()
+            # Updated method call
+            self.login_first()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -48,3 +47,41 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
                 print("Browser closed.")
+    
+    def login_first(self):
+        # Create and inject countdown element
+        countdown_js = """
+        // Create countdown element if it doesn't exist
+        if (!document.getElementById('qr-countdown')) {
+            const countdownDiv = document.createElement('div');
+            countdownDiv.id = 'qr-countdown';
+            countdownDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #128C7E;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                font-size: 18px;
+                font-family: sans-serif;
+                z-index: 9999;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            `;
+            document.body.appendChild(countdownDiv);
+        }
+        """
+        self.driver.execute_script(countdown_js)
+        
+        # Start 30 second countdown
+        total_seconds = 30
+        for remaining in range(total_seconds, 0, -1):
+            update_countdown_js = f"""
+            document.getElementById('qr-countdown').innerHTML = 
+                'Scan QR Code<br>Time remaining: {remaining}s';
+            """
+            self.driver.execute_script(update_countdown_js)
+            time.sleep(1)
+        
+        # Remove countdown element
+        self.driver.execute_script("document.getElementById('qr-countdown').remove();")

@@ -19,6 +19,7 @@ from advance.alert_prompt import AlertPrompt
 from advance.adding_deleting_cookies import AddingDeletingCookies
 from advance.assert_testing import AssertTesting
 from advance.pom_reuse import PomTesting
+from project.whatsapp_login import WhatsappLogin
 
 
 
@@ -44,6 +45,6 @@ if __name__ == "__main__":
         sys.exit(1)
     
     # Run tests
-    suite = unittest.TestLoader().loadTestsFromTestCase(PomTesting)
+    suite = unittest.TestLoader().loadTestsFromTestCase(WhatsappLogin)
 
     unittest.TextTestRunner(verbosity=2).run(suite)

@@ -1,2 +1,3 @@
-2025/11/02-00:31:02.861 6604 Creating DB c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Sync Data\LevelDB since it was missing.
-2025/11/02-00:31:02.865 6604 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Sync Data\LevelDB/MANIFEST-000001
+2025/11/03-22:57:43.445 11810 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Sync Data\LevelDB/MANIFEST-000001
+2025/11/03-22:57:43.446 11810 Recovering log #3
+2025/11/03-22:57:43.446 11810 Reusing old log c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Sync Data\LevelDB/000003.log 
