@@ -49,39 +49,49 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
                 print("Browser closed.")
     
     def login_first(self):
-        # Create and inject countdown element
-        countdown_js = """
-        // Create countdown element if it doesn't exist
-        if (!document.getElementById('qr-countdown')) {
-            const countdownDiv = document.createElement('div');
-            countdownDiv.id = 'qr-countdown';
-            countdownDiv.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #128C7E;
-                color: white;
-                padding: 15px 25px;
-                border-radius: 8px;
-                font-size: 18px;
-                font-family: sans-serif;
-                z-index: 9999;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            `;
-            document.body.appendChild(countdownDiv);
-        }
-        """
-        self.driver.execute_script(countdown_js)
-        
-        # Start 30 second countdown
-        total_seconds = 30
-        for remaining in range(total_seconds, 0, -1):
-            update_countdown_js = f"""
-            document.getElementById('qr-countdown').innerHTML = 
-                'Scan QR Code<br>Time remaining: {remaining}s';
+        try:
+            # Wait up to 10 seconds for the main chat pane to appear
+            print("Checking for existing WhatsApp login session...")
+            self.set_explicit_wait(EC.presence_of_element_located, (By.XPATH, '//*[@id="side"]/div[1]/div/div[2]/div/div/div[1]/p'), timeout=10)
+            print("✅ Already logged in to WhatsApp.")
+            # Now you can proceed with your tests for a logged-in user
+            time.sleep(50)
+            
+        except TimeoutException:
+            print("No active session found. Please scan the QR code.")
+            # Create and inject countdown element
+            countdown_js = """
+            // Create countdown element if it doesn't exist
+            if (!document.getElementById('qr-countdown')) {
+                const countdownDiv = document.createElement('div');
+                countdownDiv.id = 'qr-countdown';
+                countdownDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #128C7E;
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 8px;
+                    font-size: 18px;
+                    font-family: sans-serif;
+                    z-index: 9999;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                `;
+                document.body.appendChild(countdownDiv);
+            }
             """
-            self.driver.execute_script(update_countdown_js)
-            time.sleep(1)
-        
-        # Remove countdown element
-        self.driver.execute_script("document.getElementById('qr-countdown').remove();")
+            self.driver.execute_script(countdown_js)
+            
+            # Start 30 second countdown
+            total_seconds = 50
+            for remaining in range(total_seconds, 0, -1):
+                update_countdown_js = f"""
+                document.getElementById('qr-countdown').innerHTML = 
+                    'Scan QR Code<br>Time remaining: {remaining}s';
+                """
+                self.driver.execute_script(update_countdown_js)
+                time.sleep(1)
+            
+            # Remove countdown element
+            self.driver.execute_script("document.getElementById('qr-countdown').remove();")

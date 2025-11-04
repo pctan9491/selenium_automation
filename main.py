@@ -23,7 +23,7 @@ from project.whatsapp_login import WhatsappLogin
 
 
 
-def check_internet_connectivity(url="https://www.geeksforgeeks.org/", timeout=5):
+def check_internet_connectivity(url="https://web.whatsapp.com/", timeout=5):
     """
     Check if the specified URL is accessible.
     Returns True if accessible, False otherwise.
