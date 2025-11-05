@@ -1,13 +1,16 @@
-[79008:76736:1104/221019.441:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:206] No machine level policy manager exists.
-[19568:23028:1104/221019.554:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[73680:41548:1104/221019.555:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[78140:59988:1104/221019.607:VERBOSE1:components\viz\service\main\viz_main_impl.cc:86] VizNullHypothesis is disabled (not a warning)
-[51768:70984:1104/221020.091:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[81024:42244:1104/221020.356:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[56296:34784:1104/221020.445:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[80992:79572:1104/221020.962:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[79008:76736:1104/221020.978:INFO:CONSOLE:113] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yX/r/ixjODgSXUBK.js (113)
-[81576:75908:1104/221026.474:WARNING:net\spdy\spdy_session.cc:3071] Received HEADERS for invalid stream 1
-[79008:41484:1104/221030.626:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
-[81576:76196:1104/221031.687:WARNING:net\extras\sqlite\sqlite_persistent_store_backend_base.cc:176] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:226 to client_task_runner_.
-[81576:76196:1104/221031.688:WARNING:net\extras\sqlite\sqlite_persistent_store_backend_base.cc:176] Failed to post task from FlushAndNotifyInBackground@net\extras\sqlite\sqlite_persistent_store_backend_base.cc:226 to client_task_runner_.
+[83928:80052:1105/220759.732:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:206] No machine level policy manager exists.
+[84408:85640:1105/220759.862:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[66636:52112:1105/220759.862:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[25820:83740:1105/220800.104:VERBOSE1:components\viz\service\main\viz_main_impl.cc:86] VizNullHypothesis is disabled (not a warning)
+[33808:83360:1105/220800.877:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[83664:83324:1105/220800.878:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[84640:43856:1105/220800.905:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[63552:48824:1105/220801.295:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[83928:80052:1105/220801.350:INFO:CONSOLE:113] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yG/r/lMNV4ocpiq8.js (113)
+[83928:80052:1105/220805.621:INFO:CONSOLE:77] "ErrorUtils caught an error:
+
+Converting to a string will drop content data. Hash="undefined" Translation="{user_name}添加了{names}" Content="Context not logged." (type=object,Object)
+
+Subsequent non-fatal errors won't be logged; see https://fburl.com/debugjs. [object Object]", source: https://static.whatsapp.net/rsrc.php/v4/yK/r/WIE3S9rDYYg.js (77)
+[83928:80052:1105/220809.744:INFO:CONSOLE:113] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yG/r/lMNV4ocpiq8.js (113)
+[83928:83384:1105/220810.035:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT

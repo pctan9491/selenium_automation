@@ -38,7 +38,7 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             print("Page loaded successfully.")
 
             # Updated method call
-            self.login_first()
+            self.find_inbox()
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -55,7 +55,7 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             self.set_explicit_wait(EC.presence_of_element_located, (By.XPATH, '//*[@id="side"]/div[1]/div/div[2]/div/div/div[1]/p'), timeout=10)
             print("✅ Already logged in to WhatsApp.")
             # Now you can proceed with your tests for a logged-in user
-            time.sleep(50)
+            time.sleep(5)
             
         except TimeoutException:
             print("No active session found. Please scan the QR code.")
@@ -95,3 +95,28 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             
             # Remove countdown element
             self.driver.execute_script("document.getElementById('qr-countdown').remove();")
+
+    def find_inbox(self):
+        self.login_first()
+        timeout = 30
+        inbox_path ='//*[@id="pane-side"]/div[1]/div/div/div[1]/div/div/div/div[2]/div[1]/div[1]/div/div/span[1]'
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            try:
+                inbox_element = WebDriverWait(self.driver, 5).until(
+                    EC.presence_of_element_located((By.XPATH, inbox_path))
+                )
+                print("Inbox element found")
+                inbox_element.click()
+                time.sleep(5)
+                return inbox_element
+            except TimeoutException:
+                print("Inbox element not found yet. Retrying...")
+                self.driver.find_element(By.TAG_NAME, "body").send_keys(Keys.PAGE_DOWN)
+            
+            raise TimeoutException(f"Inbox element not found after {timeout} scrolling")
+
+
+
+
+
