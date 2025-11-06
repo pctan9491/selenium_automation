@@ -1,29 +1,23 @@
-2025/11/05-22:06:54.636 148c8 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/11/05-22:06:54.637 148c8 Recovering log #938
-2025/11/05-22:06:54.668 148c8 Reusing old log c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000938.log 
-2025/11/05-22:06:55.991 13828 Level-0 table #945: started
-2025/11/05-22:06:56.001 13828 Level-0 table #945: 1012037 bytes OK
-2025/11/05-22:06:56.002 13828 Delete type=0 #938
-2025/11/05-22:06:56.003 13828 Manual compaction at level-0 from ' \x14\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' \x15\x01\x00\x00\x00' @ 0 : 0; will stop at ' \x14\x01\x00\x00\x05' @ 1745977 : 1
-2025/11/05-22:06:56.003 13828 Compacting 1@0 + 1@1 files
-2025/11/05-22:06:56.033 13828 Generated table #946@0: 41524 keys, 1925726 bytes
-2025/11/05-22:06:56.033 13828 Compacted 1@0 + 1@1 files => 1925726 bytes
-2025/11/05-22:06:56.033 13828 compacted to: files[ 0 1 1 0 0 0 0 ]
-2025/11/05-22:06:56.033 13828 Delete type=2 #945
-2025/11/05-22:06:56.033 13828 Manual compaction at level-0 from ' \x14\x01\x00\x00\x05' @ 1745977 : 1 .. ' \x15\x01\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/11/05-22:06:57.350 148c8 Compacting 1@1 + 1@2 files
-2025/11/05-22:06:57.387 148c8 Generated table #947@1: 35834 keys, 2193880 bytes
-2025/11/05-22:06:57.404 148c8 Generated table #948@1: 24283 keys, 1101760 bytes
-2025/11/05-22:06:57.404 148c8 Compacted 1@1 + 1@2 files => 3295640 bytes
-2025/11/05-22:06:57.404 148c8 compacted to: files[ 0 0 2 0 0 0 0 ]
-2025/11/05-22:06:57.404 148c8 Delete type=2 #941
-2025/11/05-22:06:57.404 148c8 Delete type=2 #942
-2025/11/05-22:06:57.404 148c8 Delete type=2 #946
-2025/11/05-22:07:00.950 148c8 Level-0 table #950: started
-2025/11/05-22:07:00.965 148c8 Level-0 table #950: 1170568 bytes OK
-2025/11/05-22:07:00.966 148c8 Delete type=0 #944
-2025/11/05-22:07:01.375 149e8 Compacting 1@1 + 2@2 files
-2025/11/05-22:07:01.407 149e8 Generated table #951@1: 45220 keys, 2205078 bytes
-2025/11/05-22:07:01.425 149e8 Generated table #952@1: 25529 keys, 1523058 bytes
-2025/11/05-22:07:01.425 149e8 Compacted 1@1 + 2@2 files => 3728136 bytes
-2025/11/05-22:07:01.425 149e8 compacted to: files[ 0 0 2 0 0 0 0 ]
+2025/11/06-22:41:10.056 d288 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/11/06-22:41:10.057 d288 Recovering log #1290
+2025/11/06-22:41:10.088 d288 Reusing old log c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/001290.log 
+2025/11/06-22:41:11.447 d288 Level-0 table #1300: started
+2025/11/06-22:41:11.462 d288 Level-0 table #1300: 985649 bytes OK
+2025/11/06-22:41:11.463 d288 Delete type=0 #1290
+2025/11/06-22:41:11.464 d288 Manual compaction at level-0 from ' A\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' B\x01\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/11/06-22:41:12.449 11410 Compacting 1@1 + 6@2 files
+2025/11/06-22:41:12.485 11410 Generated table #1301@1: 58798 keys, 2220774 bytes
+2025/11/06-22:41:12.510 11410 Generated table #1302@1: 13864 keys, 2166837 bytes
+2025/11/06-22:41:12.525 11410 Generated table #1303@1: 2946 keys, 2153806 bytes
+2025/11/06-22:41:12.562 11410 Generated table #1304@1: 37337 keys, 2239006 bytes
+2025/11/06-22:41:12.592 11410 Generated table #1305@1: 54695 keys, 2206105 bytes
+2025/11/06-22:41:12.613 11410 Generated table #1306@1: 55718 keys, 1162745 bytes
+2025/11/06-22:41:12.613 11410 Compacted 1@1 + 6@2 files => 12149273 bytes
+2025/11/06-22:41:12.613 11410 compacted to: files[ 0 0 6 0 0 0 0 ]
+2025/11/06-22:41:12.613 11410 Delete type=2 #1292
+2025/11/06-22:41:12.613 11410 Delete type=2 #1293
+2025/11/06-22:41:12.613 11410 Delete type=2 #1294
+2025/11/06-22:41:12.613 11410 Delete type=2 #1295
+2025/11/06-22:41:12.613 11410 Delete type=2 #1296
+2025/11/06-22:41:12.613 11410 Delete type=2 #1297
+2025/11/06-22:41:12.613 11410 Delete type=2 #1300

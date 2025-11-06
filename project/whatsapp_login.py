@@ -96,10 +96,28 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             # Remove countdown element
             self.driver.execute_script("document.getElementById('qr-countdown').remove();")
 
+    def send_message(self, message):
+        print("Send message")
+        
     def find_inbox(self):
         self.login_first()
         timeout = 30
-        inbox_path ='//*[@id="pane-side"]/div[1]/div/div/div[1]/div/div/div/div[2]/div[1]/div[1]/div/div/span[1]'
+        inbox_path ='//*[@id="pane-side"]/div[1]/div/div/div[2]/div/div/div/div[2]'
+        search_content ='0199130949'
+        search_box_path = '//*[@id="side"]/div[1]/div/div[2]/div/div/div[1]/p'
+
+        try:
+            search_box = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located((By.XPATH, search_box_path))
+            )
+            search_box.clear()
+            search_box.send_keys(search_content)
+            time.sleep(2)
+
+        except TimeoutException:
+            print("Search box not found.")
+            return None
+        
         start_time = time.time()
         while time.time() - start_time < timeout:
             try:

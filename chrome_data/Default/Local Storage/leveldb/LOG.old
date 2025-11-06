@@ -1,5 +1,6 @@
-2025/11/05-22:06:53.029 10ca4 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Local Storage\leveldb/MANIFEST-000001
-2025/11/05-22:06:53.033 10ca4 Recovering log #7
-2025/11/05-22:06:53.035 10ca4 Reusing old log c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Local Storage\leveldb/000007.log 
-2025/11/05-22:07:04.913 fbb4 Level-0 table #11: started
-2025/11/05-22:07:04.920 fbb4 Level-0 table #11: 20440 bytes OK
+2025/11/06-22:41:08.525 9824 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Local Storage\leveldb/MANIFEST-000001
+2025/11/06-22:41:08.530 9824 Recovering log #12
+2025/11/06-22:41:08.533 9824 Reusing old log c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\Local Storage\leveldb/000012.log 
+2025/11/06-22:41:20.520 162d4 Level-0 table #16: started
+2025/11/06-22:41:20.525 162d4 Level-0 table #16: 15176 bytes OK
+2025/11/06-22:41:20.527 162d4 Delete type=0 #12
