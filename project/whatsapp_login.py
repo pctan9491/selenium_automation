@@ -40,6 +40,10 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             # Updated method call
             self.find_inbox()
 
+            #send message
+            message_word = "Send message with current date:" + time.strftime("%Y-%m-%d %H:%M:%S")
+            self.send_message(message_word)
+
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
         finally:
@@ -134,7 +138,17 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             
             raise TimeoutException(f"Inbox element not found after {timeout} scrolling")
 
-
+    def send_message(self, message):
+        print("Send message")
+        message_box_path = '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div/div[3]/div[1]/p'
+        message_box = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, message_box_path))
+        )
+        message_box.clear()
+        message_box.send_keys(message)
+        time.sleep(2)
+        #message_box.send_keys(Keys.ENTER)
+        print("message sent")
 
 
 

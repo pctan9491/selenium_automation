@@ -1,23 +1,19 @@
-2025/11/06-22:41:10.056 d288 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2025/11/06-22:41:10.057 d288 Recovering log #1290
-2025/11/06-22:41:10.088 d288 Reusing old log c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/001290.log 
-2025/11/06-22:41:11.447 d288 Level-0 table #1300: started
-2025/11/06-22:41:11.462 d288 Level-0 table #1300: 985649 bytes OK
-2025/11/06-22:41:11.463 d288 Delete type=0 #1290
-2025/11/06-22:41:11.464 d288 Manual compaction at level-0 from ' A\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' B\x01\x00\x00\x00' @ 0 : 0; will stop at (end)
-2025/11/06-22:41:12.449 11410 Compacting 1@1 + 6@2 files
-2025/11/06-22:41:12.485 11410 Generated table #1301@1: 58798 keys, 2220774 bytes
-2025/11/06-22:41:12.510 11410 Generated table #1302@1: 13864 keys, 2166837 bytes
-2025/11/06-22:41:12.525 11410 Generated table #1303@1: 2946 keys, 2153806 bytes
-2025/11/06-22:41:12.562 11410 Generated table #1304@1: 37337 keys, 2239006 bytes
-2025/11/06-22:41:12.592 11410 Generated table #1305@1: 54695 keys, 2206105 bytes
-2025/11/06-22:41:12.613 11410 Generated table #1306@1: 55718 keys, 1162745 bytes
-2025/11/06-22:41:12.613 11410 Compacted 1@1 + 6@2 files => 12149273 bytes
-2025/11/06-22:41:12.613 11410 compacted to: files[ 0 0 6 0 0 0 0 ]
-2025/11/06-22:41:12.613 11410 Delete type=2 #1292
-2025/11/06-22:41:12.613 11410 Delete type=2 #1293
-2025/11/06-22:41:12.613 11410 Delete type=2 #1294
-2025/11/06-22:41:12.613 11410 Delete type=2 #1295
-2025/11/06-22:41:12.613 11410 Delete type=2 #1296
-2025/11/06-22:41:12.613 11410 Delete type=2 #1297
-2025/11/06-22:41:12.613 11410 Delete type=2 #1300
+2025/11/10-23:02:15.094 12464 Reusing MANIFEST c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/11/10-23:02:15.094 12464 Recovering log #1494
+2025/11/10-23:02:15.095 12464 Reusing old log c:\Users\User\Documents\Project\selenium_automation\chrome_data\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/001494.log 
+2025/11/10-23:02:15.095 12464 Delete type=2 #1493
+2025/11/10-23:02:15.095 12464 Delete type=2 #1497
+2025/11/10-23:02:15.095 12464 Delete type=2 #1498
+2025/11/10-23:02:15.428 12464 Level-0 table #1499: started
+2025/11/10-23:02:15.430 12464 Level-0 table #1499: 7071 bytes OK
+2025/11/10-23:02:15.431 12464 Delete type=0 #1494
+2025/11/10-23:02:15.432 12464 Manual compaction at level-0 from ' E\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' F\x01\x00\x00\x00' @ 0 : 0; will stop at ' E\x01\x00\x00\x05' @ 4267723 : 1
+2025/11/10-23:02:15.432 12464 Compacting 1@0 + 1@1 files
+2025/11/10-23:02:15.452 12464 Generated table #1500@0: 31439 keys, 560843 bytes
+2025/11/10-23:02:15.452 12464 Compacted 1@0 + 1@1 files => 560843 bytes
+2025/11/10-23:02:15.452 12464 compacted to: files[ 0 1 8 0 0 0 0 ]
+2025/11/10-23:02:15.453 12464 Delete type=2 #1499
+2025/11/10-23:02:15.453 12464 Manual compaction at level-0 from ' E\x01\x00\x00\x05' @ 4267723 : 1 .. ' F\x01\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/11/10-23:02:16.490 160b8 Compacting 1@1 + 8@2 files
+2025/11/10-23:02:16.551 160b8 Generated table #1501@1: 77164 keys, 2229897 bytes
+2025/11/10-23:02:16.599 160b8 compacted to: files[ 0 1 8 0 0 0 0 ]
