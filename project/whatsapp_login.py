@@ -1,3 +1,4 @@
+from argparse import Action
 import time
 import unittest
 import sys
@@ -43,6 +44,9 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             #send message
             message_word = "Send message with current date:" + time.strftime("%Y-%m-%d %H:%M:%S")
             self.send_message(message_word)
+            file_path = r"C:\Users\User\Documents\Example.docx"
+            self.attach_file(file_path)
+            time.sleep(3)
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -144,11 +148,42 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
         message_box = WebDriverWait(self.driver, 5).until(
             EC.presence_of_element_located((By.XPATH, message_box_path))
         )
-        message_box.clear()
+        message_box.click()
+        ActionChains(self.driver).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.BACKSPACE).perform()
+        time.sleep(3)
         message_box.send_keys(message)
-        time.sleep(2)
+        time.sleep(3)
         #message_box.send_keys(Keys.ENTER)
         print("message sent")
+    
+    def attach_file(self, file_path):
+        print("Attach file")
+        self.plus_button_action()
+        self.attachment_button_action()
+        print("Attach filed completed")
+
+    
+
+    def plus_button_action(self):
+        whatsapp_plus_button_path = '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div/div[1]/button/span'
+        whatsapp_plus_button = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, whatsapp_plus_button_path))
+        )
+        whatsapp_plus_button.click()
+        print("Whatsapp plus button clicked")
+        time.sleep(2)
+
+    
+    def attachment_button_action(self):
+        whatsapp_attachment_button_path = '//*[@id="app"]/div[1]/div/span[6]/div/ul/div/div/div[1]/li/div/span'
+        whatsapp_attachment_button = WebDriverWait(self.driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, whatsapp_attachment_button_path))
+        )
+        whatsapp_attachment_button.click()
+        print("Whatsapp attachment button clicked")
+        time.sleep(2)
+
+
 
 
 

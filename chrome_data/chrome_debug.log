@@ -1,11 +1,12 @@
-[99768:70668:1110/230251.954:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:206] No machine level policy manager exists.
-[98648:98644:1110/230252.161:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[100160:99568:1110/230252.262:VERBOSE1:components\viz\service\main\viz_main_impl.cc:86] VizNullHypothesis is disabled (not a warning)
-[86744:62316:1110/230252.506:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[98684:99508:1110/230252.614:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[99544:95388:1110/230252.889:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[79000:58432:1110/230253.029:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[96888:84076:1110/230253.385:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
-[99768:70668:1110/230253.448:INFO:CONSOLE:113] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yB/r/eUUTg1jjhq1.js (113)
-[99768:98832:1110/230302.708:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
-[99768:70668:1110/230302.841:INFO:CONSOLE:113] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/yB/r/eUUTg1jjhq1.js (113)
+[100640:98540:1115/001936.572:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:206] No machine level policy manager exists.
+[95700:88456:1115/001936.753:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[98932:102728:1115/001936.755:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[82632:33088:1115/001936.890:VERBOSE1:components\viz\service\main\viz_main_impl.cc:86] VizNullHypothesis is disabled (not a warning)
+[101568:65192:1115/001937.210:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[99172:71924:1115/001937.242:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[106540:106240:1115/001937.349:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[27556:98148:1115/001937.684:INFO:third_party\webrtc\rtc_base\cpu_info.cc:75] Available number of cores: 16
+[100640:98540:1115/001937.760:INFO:CONSOLE:113] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y5/r/07uCTb2FfiQ.js (113)
+[100640:71700:1115/001947.354:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
+[100640:98540:1115/001947.604:INFO:CONSOLE:113] "Event handler of 'x-storagemutated-1' event must be added on the initial evaluation of worker script.", source: https://static.whatsapp.net/rsrc.php/v4/y5/r/07uCTb2FfiQ.js (113)
+[100640:71700:1115/002008.548:ERROR:google_apis\gcm\engine\registration_request.cc:292] Registration response error message: DEPRECATED_ENDPOINT
