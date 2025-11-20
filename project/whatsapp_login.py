@@ -4,6 +4,7 @@ import unittest
 import sys
 import os
 import pyperclip
+import pyautogui
 from selenium.webdriver.common import desired_capabilities
 
 
@@ -46,7 +47,6 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
             self.send_message(message_word)
             file_path = r"C:\Users\User\Documents\Example.docx"
             self.attach_file(file_path)
-            time.sleep(3)
 
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
@@ -150,7 +150,6 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
         )
         message_box.click()
         ActionChains(self.driver).key_down(Keys.CONTROL).send_keys('a').key_up(Keys.CONTROL).send_keys(Keys.BACKSPACE).perform()
-        time.sleep(3)
         message_box.send_keys(message)
         time.sleep(3)
         #message_box.send_keys(Keys.ENTER)
@@ -159,10 +158,24 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
     def attach_file(self, file_path):
         print("Attach file")
         self.plus_button_action()
-        self.attachment_button_action()
-        print("Attach filed completed")
+        # Find the hidden file input element and send the file path
+        attach_button = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="app"]/div/div/span[6]/div/ul/div/div/div[1]/li/div'))
+        )
+        attach_button.click()
+        time.sleep(2)
+        pyautogui.write(file_path)
+        time.sleep(2)
+        pyautogui.press('enter')
+        time.sleep(2)
+        pyautogui.press('enter')
 
-    
+        # Wait for the send button to be clickable and click it
+        send_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="Send"]/parent::button'))
+        )
+        #send_button.click()
+        print("Attach file completed")
 
     def plus_button_action(self):
         whatsapp_plus_button_path = '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div/div[1]/button/span'
@@ -172,16 +185,7 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
         whatsapp_plus_button.click()
         print("Whatsapp plus button clicked")
         time.sleep(2)
-
     
-    def attachment_button_action(self):
-        whatsapp_attachment_button_path = '//*[@id="app"]/div[1]/div/span[6]/div/ul/div/div/div[1]/li/div/span'
-        whatsapp_attachment_button = WebDriverWait(self.driver, 5).until(
-            EC.presence_of_element_located((By.XPATH, whatsapp_attachment_button_path))
-        )
-        whatsapp_attachment_button.click()
-        print("Whatsapp attachment button clicked")
-        time.sleep(2)
 
 
 
