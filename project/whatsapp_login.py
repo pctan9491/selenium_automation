@@ -165,17 +165,19 @@ class WhatsappLogin(SeleniumTemplate, unittest.TestCase):
         attach_button.click()
         time.sleep(2)
         pyautogui.write(file_path)
-        time.sleep(2)
+        time.sleep(1)
         pyautogui.press('enter')
-        time.sleep(2)
+        time.sleep(1)
         pyautogui.press('enter')
 
         # Wait for the send button to be clickable and click it
         send_button = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//div[@aria-label="Send"]/parent::button'))
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="app"]/div/div/div[3]/div/div[3]/div[2]/div/span/div/div/div/div[2]/div/div[2]/div[2]/div/div/span'))
         )
-        #send_button.click()
+        send_button.click()
+        time.sleep(2)
         print("Attach file completed")
+        print("File sent")
 
     def plus_button_action(self):
         whatsapp_plus_button_path = '//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div/div[1]/button/span'
